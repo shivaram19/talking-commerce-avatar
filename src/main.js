@@ -3,9 +3,9 @@ import { Speech } from './speech.js';
 import { getReply } from './chat.js';
 import { PROSODY_PROFILES } from './emotions/taxonomy.js';
 
-// Local Ready Player Me avatar with ARKit + Oculus viseme morph targets
-// (CDN was unreliable — local file loads faster and avoids CORS/network issues)
-const DEFAULT_AVATAR = '/avatar-human.glb';
+// Ready Player Me demo avatar with ARKit + Oculus viseme morph targets
+// Note: The local avatar-human.glb file lacks morph targets; use RPM CDN
+const DEFAULT_AVATAR = 'https://models.readyplayer.me/64bfa15f0e72c63d7c3934a6.glb?morphTargets=ARKit,Oculus+Visemes,mouthOpen,mouthSmile,eyesClosed,eyesLookUp,eyesLookDown&textureSizeLimit=1024&textureFormat=png';
 
 const container = document.getElementById('avatar-container');
 const talkBtn = document.getElementById('talk-btn');
