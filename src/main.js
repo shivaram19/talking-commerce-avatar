@@ -1,6 +1,7 @@
 import { TalkingHead } from '@met4citizen/talkinghead';
 import { Speech } from './speech.js';
 import { getReply } from './chat.js';
+import { PROSODY_PROFILES } from './emotions/taxonomy.js';
 
 // Default Ready Player Me demo avatar with ARKit + Oculus viseme morph targets
 const DEFAULT_AVATAR = 'https://models.readyplayer.me/64bfa15f0e72c63d7c3934a6.glb?morphTargets=ARKit,Oculus+Visemes,mouthOpen,mouthSmile,eyesClosed,eyesLookUp,eyesLookDown&textureSizeLimit=1024&textureFormat=png';
@@ -30,12 +31,15 @@ async function initAvatar() {
     head = new TalkingHead(container, {
       ttsEndpoint: '',
       ttsApikey: '',
-      lipsyncModules: ['en'],
+      lipsyncModules: [], // We'll load manually from /modules/
       lipsyncLang: 'en',
       cameraView: 'upper', // Face-focused
       avatarMood: 'neutral',
       avatarMute: false,
     });
+
+    // Load lipsync module from public/modules/ (Vite copies public/ to dist/)
+    head.lipsyncGetProcessor('en', '/modules/');
 
     head.addEventListener('load', () => {
       addMessage('system', '✅ Avatar loaded! Say hello 👋');
@@ -151,10 +155,11 @@ async function handleUserMessage(text) {
     head.setMood(result.emotion);
   }
 
-  // Browser TTS for audio
+  // Browser TTS for audio — with emotion-matched prosody
+  const prosody = PROSODY_PROFILES[result.emotion] || PROSODY_PROFILES.neutral;
   Speech.speak(result.text, () => {
     setStatus('idle');
-  });
+  }, prosody);
 
   // Lip-sync animation via TalkingHead
   if (head) {

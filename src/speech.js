@@ -70,16 +70,16 @@ export const Speech = {
     }
   },
 
-  speak(text, onEnd) {
+  speak(text, onEnd, prosody = null) {
     if (this.muted || !this.synth) {
       if (onEnd) setTimeout(onEnd, 500);
       return;
     }
     this.synth.cancel();
     const utter = new SpeechSynthesisUtterance(text);
-    utter.rate = 1.0;
-    utter.pitch = 1.0;
-    utter.volume = 1.0;
+    utter.rate = prosody?.rate ?? 1.0;
+    utter.pitch = prosody?.pitch ?? 1.0;
+    utter.volume = prosody?.volume ?? 1.0;
     utter.lang = navigator.language || 'en-US';
     utter.onend = () => {
       if (onEnd) onEnd();
