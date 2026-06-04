@@ -12,4 +12,7 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
   },
+  optimizeDeps: {
+    exclude: ['@met4citizen/talkinghead/modules/lipsync-en.mjs'],
+  },
 });
