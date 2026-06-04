@@ -39,26 +39,14 @@ async function initAvatar() {
       avatarMute: false,
     });
 
-    head.addEventListener('load', () => {
-      addMessage('system', '✅ Avatar loaded! Say hello 👋');
-      setStatus('idle');
-    });
-
-    head.addEventListener('play', () => {
-      isSpeaking = true;
-      setStatus('speaking');
-    });
-
-    head.addEventListener('stop', () => {
-      isSpeaking = false;
-      setStatus('idle');
-    });
-
     await head.showAvatar({
       url: DEFAULT_AVATAR,
       body: 'F',
       lipsyncLang: 'en',
     });
+
+    addMessage('system', '✅ Avatar loaded! Say hello 👋');
+    setStatus('idle');
 
   } catch (err) {
     console.error('Avatar init failed:', err);
@@ -157,7 +145,10 @@ async function handleUserMessage(text) {
 
   // Browser TTS for audio — with emotion-matched prosody
   const prosody = PROSODY_PROFILES[result.emotion] || PROSODY_PROFILES.neutral;
+  isSpeaking = true;
+  setStatus('speaking');
   Speech.speak(result.text, () => {
+    isSpeaking = false;
     setStatus('idle');
   }, prosody);
 
