@@ -3,8 +3,9 @@ import { Speech } from './speech.js';
 import { getReply } from './chat.js';
 import { PROSODY_PROFILES } from './emotions/taxonomy.js';
 
-// Default Ready Player Me demo avatar with ARKit + Oculus viseme morph targets
-const DEFAULT_AVATAR = 'https://models.readyplayer.me/64bfa15f0e72c63d7c3934a6.glb?morphTargets=ARKit,Oculus+Visemes,mouthOpen,mouthSmile,eyesClosed,eyesLookUp,eyesLookDown&textureSizeLimit=1024&textureFormat=png';
+// Local Ready Player Me avatar with ARKit + Oculus viseme morph targets
+// (CDN was unreliable — local file loads faster and avoids CORS/network issues)
+const DEFAULT_AVATAR = '/avatar-human.glb';
 
 const container = document.getElementById('avatar-container');
 const talkBtn = document.getElementById('talk-btn');
@@ -31,15 +32,12 @@ async function initAvatar() {
     head = new TalkingHead(container, {
       ttsEndpoint: '',
       ttsApikey: '',
-      lipsyncModules: [], // We'll load manually from /modules/
+      lipsyncModules: [], // We use manual speakAudio with silent buffer + word timings
       lipsyncLang: 'en',
       cameraView: 'upper', // Face-focused
       avatarMood: 'neutral',
       avatarMute: false,
     });
-
-    // Load lipsync module from public/modules/ (Vite copies public/ to dist/)
-    head.lipsyncGetProcessor('en', '/modules/');
 
     head.addEventListener('load', () => {
       addMessage('system', '✅ Avatar loaded! Say hello 👋');
@@ -64,7 +62,9 @@ async function initAvatar() {
 
   } catch (err) {
     console.error('Avatar init failed:', err);
-    addMessage('system', '❌ Failed to load avatar. Try clicking "Get Avatar" to use your own.');
+    const errorDetails = err.stack ? err.stack.split('\n').slice(0,3).join('\n') : err.message;
+    addMessage('system', `❌ Failed to load avatar.\nError: ${err.message}`);
+    console.error('Full error:', err);
     setStatus('idle');
   }
 }
