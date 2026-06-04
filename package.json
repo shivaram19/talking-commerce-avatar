@@ -1,0 +1,21 @@
+{
+  "name": "3d-avatar-google-filament",
+  "version": "2.0.0",
+  "description": "Interactive 3D Human Avatar — Three.js + TalkingHead + Web Speech API",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": ["talkinghead", "threejs", "avatar", "web-speech", "lip-sync"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "@met4citizen/talkinghead": "^1.7.0",
+    "three": "^0.180.0"
+  }
+}
