@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talking Human Avatar — Three.js + TalkingHead</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="avatar-container"></div>
+    
+    <div id="ui-overlay">
+      <div id="header">
+        <h1>🎙️ Talk to your Avatar</h1>
+        <p>Powered by Three.js + <a href="https://github.com/met4citizen/TalkingHead" target="_blank">TalkingHead</a></p>
+        <div id="emotion-badge">🙂 Neutral</div>
+      </div>
+
+      <div id="drop-zone" class="hidden">
+        <p>Drop a GLB avatar here</p>
+      </div>
+
+      <div id="chat-panel">
+        <div id="messages"></div>
+      </div>
+
+      <div id="text-chat">
+        <input type="text" id="text-input" placeholder="Type a message..." autocomplete="off">
+        <button id="send-btn" class="btn primary">➤</button>
+      </div>
+
+      <div id="controls">
+        <button id="talk-btn" class="btn primary">
+          <span class="icon">🎤</span>
+          <span class="label">Hold to Talk</span>
+        </button>
+        <button id="mute-btn" class="btn">
+          <span class="icon">🔊</span>
+          <span class="label">Mute</span>
+        </button>
+        <button id="load-avatar-btn" class="btn">
+          <span class="icon">👤</span>
+          <span class="label">Get Avatar</span>
+        </button>
+      </div>
+
+      <div id="status-bar">
+        <span id="status-indicator" class="dot"></span>
+        <span id="status-text">Ready</span>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
